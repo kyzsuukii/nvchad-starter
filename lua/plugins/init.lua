@@ -54,6 +54,7 @@ return {
     build = "make tiktoken", -- Only on MacOS or Linux
     opts = {
       debug = false, -- Enable debugging
+      model = "gpt-4",
     },
   },
 

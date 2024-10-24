@@ -68,3 +68,5 @@ end)
 map("n", "f/", function()
   hop.hint_patterns()
 end)
+
+map("n", "<A-p>", "<cmd>CdProject<cr>")
