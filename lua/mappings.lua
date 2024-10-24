@@ -70,3 +70,5 @@ map("n", "f/", function()
 end)
 
 map("n", "<A-p>", "<cmd>CdProject<cr>")
+
+map({ "n", "v" }, "<leader>m", "<cmd>MCstart<cr>")
