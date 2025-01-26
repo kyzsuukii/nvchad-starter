@@ -50,7 +50,7 @@ map("n", "<leader>cr", function()
 end)
 
 map("n", "f", function()
-  hop.hint_words()
+  hop.hint_char1()
 end)
 
 map("n", "fb", function()
