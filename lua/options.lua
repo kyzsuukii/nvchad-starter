@@ -1,9 +1,8 @@
 require "nvchad.options"
 
--- add yours here!
+local o = vim.o
 
--- local o = vim.o
--- o.cursorlineopt ='both' -- to enable cursorline!
+o.mousemoveevent = true
 
 vim.filetype.add {
   pattern = {
@@ -19,3 +18,7 @@ vim.api.nvim_create_autocmd("BufDelete", {
     end
   end,
 })
+
+vim.api.nvim_set_hl(0, "IblChar", { fg = "#3B4252" })
+
+rawset(vim, "deprecate", function() end)

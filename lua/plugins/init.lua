@@ -1,11 +1,10 @@
 return {
   {
     "stevearc/conform.nvim",
-    event = "BufWritePre", -- uncomment for format on save
+    event = "BufWritePre",
     opts = require "configs.conform",
   },
 
-  -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -52,79 +51,116 @@ return {
     "CopilotC-Nvim/CopilotChat.nvim",
     branch = "main",
     dependencies = {
-      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+      { "zbirenbaum/copilot.lua" },
+      { "nvim-lua/plenary.nvim" },
     },
-    build = "make tiktoken", -- Only on MacOS or Linux
+    build = "make tiktoken",
     opts = {
-      debug = false, -- Enable debugging
+      debug = false,
       model = "gpt-4",
     },
   },
-
   {
-    "smoka7/hop.nvim",
-    opts = {
-      keys = "etovxqpdygfblzhckisuran",
-    },
-  },
-
-  {
-    "LintaoAmons/cd-project.nvim",
-    init = function()
-      require("cd-project").setup {
-        projects_config_filepath = vim.fs.normalize(vim.fn.stdpath "config" .. "/cd-project.nvim.json"),
-        project_dir_pattern = { ".git", ".gitignore", "Cargo.toml", "package.json", "go.mod" },
-        choice_format = "both",
-        projects_picker = "telescope",
-        auto_register_project = false,
-        hooks = {
-          -- {
-          --   trigger_point = "BEFORE_CD",
-          --   callback = function(_)
-          --     vim.print("before cd project")
-          --     require("bookmarks").api.mark({name = "before cd project"})
-          --   end,
-          -- },
-          -- {
-          --   callback = function(_)
-          --     require("telescope").extensions.smart_open.smart_open({
-          --       cwd_only = true,
-          --       filename_first = false,
-          --     })
-          --   end,
-          -- },
-        },
-      }
-    end,
-  },
-
-  {
-    "smoka7/multicursors.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "nvimtools/hydra.nvim",
-    },
+    "brenton-leighton/multiple-cursors.nvim",
+    version = "*",
     opts = {},
-    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-  },
-
-  {
-    "adalessa/laravel.nvim",
-    dependencies = {
-      "tpope/vim-dotenv",
-      "nvim-telescope/telescope.nvim",
-      "MunifTanjim/nui.nvim",
-      "kevinhwang91/promise-async",
-    },
-    cmd = { "Laravel" },
     keys = {
-      { "<leader>la", ":Laravel artisan<cr>" },
-      { "<leader>lr", ":Laravel routes<cr>" },
-      { "<leader>lm", ":Laravel related<cr>" },
+      { "<C-j>", "<Cmd>MultipleCursorsAddDown<CR>", mode = { "n", "x" }, desc = "Add cursor and move down" },
+      { "<C-k>", "<Cmd>MultipleCursorsAddUp<CR>", mode = { "n", "x" }, desc = "Add cursor and move up" },
+
+      { "<C-Up>", "<Cmd>MultipleCursorsAddUp<CR>", mode = { "n", "i", "x" }, desc = "Add cursor and move up" },
+      { "<C-Down>", "<Cmd>MultipleCursorsAddDown<CR>", mode = { "n", "i", "x" }, desc = "Add cursor and move down" },
+
+      { "<C-LeftMouse>", "<Cmd>MultipleCursorsMouseAddDelete<CR>", mode = { "n", "i" }, desc = "Add or remove cursor" },
+
+      {
+        "<Leader>m",
+        "<Cmd>MultipleCursorsAddVisualArea<CR>",
+        mode = { "x" },
+        desc = "Add cursors to the lines of the visual area",
+      },
+
+      { "<Leader>a", "<Cmd>MultipleCursorsAddMatches<CR>", mode = { "n", "x" }, desc = "Add cursors to cword" },
+      {
+        "<Leader>A",
+        "<Cmd>MultipleCursorsAddMatchesV<CR>",
+        mode = { "n", "x" },
+        desc = "Add cursors to cword in previous area",
+      },
+
+      {
+        "<Leader>d",
+        "<Cmd>MultipleCursorsAddJumpNextMatch<CR>",
+        mode = { "n", "x" },
+        desc = "Add cursor and jump to next cword",
+      },
+      { "<Leader>D", "<Cmd>MultipleCursorsJumpNextMatch<CR>", mode = { "n", "x" }, desc = "Jump to next cword" },
+
+      { "<Leader>l", "<Cmd>MultipleCursorsLock<CR>", mode = { "n", "x" }, desc = "Lock virtual cursors" },
     },
-    event = { "VeryLazy" },
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+    event = "VeryLazy",
     opts = {},
-    config = true,
+  },
+  {
+    "soulis-1256/eagle.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      {
+        "s",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
+        end,
+        desc = "Flash",
+      },
+      {
+        "S",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").treesitter()
+        end,
+        desc = "Flash Treesitter",
+      },
+      {
+        "r",
+        mode = "o",
+        function()
+          require("flash").remote()
+        end,
+        desc = "Remote Flash",
+      },
+      {
+        "R",
+        mode = { "o", "x" },
+        function()
+          require("flash").treesitter_search()
+        end,
+        desc = "Treesitter Search",
+      },
+      {
+        "<c-s>",
+        mode = { "c" },
+        function()
+          require("flash").toggle()
+        end,
+        desc = "Toggle Flash Search",
+      },
+    },
+  },
+  {
+    "karb94/neoscroll.nvim",
+  },
+  {
+    "EdenEast/nightfox.nvim",
   },
 }

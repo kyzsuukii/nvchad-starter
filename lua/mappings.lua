@@ -1,17 +1,11 @@
 require "nvchad.mappings"
 
--- add yours here
-
 local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
-
 local chat = require "CopilotChat"
-local hop = require "hop"
-local directions = require("hop.hint").HintDirection
 
 map("n", "<A-Up>", ":m .-2<CR>==")
 map("i", "<A-Up>", "<Esc>:m .-2<CR>==gi")
@@ -49,26 +43,6 @@ map("n", "<leader>cr", function()
   chat.reset()
 end)
 
-map("n", "f", function()
-  hop.hint_char1()
-end)
-
-map("n", "fb", function()
-  hop.hint_words { direction = directions.BEFORE_CURSOR }
-end)
-
-map("n", "fa", function()
-  hop.hint_words { direction = directions.AFTER_CURSOR }
-end)
-
-map("n", "fl", function()
-  hop.hint_lines()
-end)
-
-map("n", "f/", function()
-  hop.hint_patterns()
-end)
-
 map("n", "<A-p>", "<cmd>CdProject<cr>")
 
-map({ "n", "v" }, "<leader>m", "<cmd>MCstart<cr>")
+map("n", "dd", '"_dd', { noremap = true, silent = true })
