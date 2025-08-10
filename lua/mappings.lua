@@ -45,4 +45,6 @@ end)
 
 map("n", "<A-p>", "<cmd>CdProject<cr>")
 
-map("n", "dd", '"_dd', { noremap = true, silent = true })
+map({ "n", "v" }, "dd", '"_dd', { noremap = true, silent = true })
+
+map("v", "<C-c>", '"+y', { noremap = true, silent = true })
